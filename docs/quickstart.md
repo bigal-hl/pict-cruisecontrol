@@ -6,7 +6,7 @@ This guide walks through registering Cruise Control against a Pict application, 
 
 - Node.js installed
 - An existing [Pict](https://fable-retold.github.io/pict/) application instance (Cruise Control registers its services and views onto one)
-- A browser context for the persistence and DOM-reading features &mdash; the state manager calls `window.localStorage`, and the built-in assertions read the DOM
+- A browser context for the persistence and DOM-reading features - the state manager calls `window.localStorage`, and the built-in assertions read the DOM
 
 ## Install
 
@@ -33,7 +33,7 @@ The workflow engine service itself (`FableCruiseControl`) registers a service ty
 
 > **Note:** the engine reads and writes the current workflow through `this.fable.services.CruiseControlStateManagement`. Register the state manager under exactly that service hash, or the engine will not find it.
 
-## Step 1 &mdash; Register The Services
+## Step 1 - Register The Services
 
 Cruise Control services extend `fable-serviceproviderbase`, so they register against a Fable/Pict instance the same way every Retold service does.
 
@@ -57,7 +57,7 @@ When the engine is constructed it automatically:
 - adds the built-in `Wait` workflow step,
 - adds the built-in `TitleContains` and `ElementExists` assertions.
 
-## Step 2 &mdash; Start The Built-In Wait Workflow
+## Step 2 - Start The Built-In Wait Workflow
 
 The engine drives whatever workflow is currently stored in `_Pict.AppData.CurrentWorkflow`. `startWorkflow` resets and loads that stored workflow, initializes its state, and begins executing at the step hash you pass.
 
@@ -73,7 +73,7 @@ The generic `Wait` step reads its duration from `AppData.CurrentWorkflowStep.Wai
 
 > **Note:** `startWorkflow` first calls `resetWorkflow()`, which clears any previously stored workflow. If no workflow is available after loading, the engine logs an error and returns without running. The shape of a stored workflow is documented in [Architecture](architecture.md).
 
-## Step 3 &mdash; Write A Custom Workflow Step
+## Step 3 - Write A Custom Workflow Step
 
 A step is a subclass of the exported `WorkflowStep` base class. Override `onExecuteStep` (and optionally `onBeforeExecuteStep` / `onAfterExecuteStep`), set a human-readable `stepName`, and always end by calling the supplied callback.
 
@@ -117,7 +117,7 @@ _CruiseControl.addWorkflowStep('ClickLogin', WorkflowStepClickLogin);
 
 For each step the engine runs, in order: `onBeforeExecuteStep`, then `onExecuteStep`, then `onAfterExecuteStep`. If the step's `nextStepDelay` is greater than `0`, the engine waits that many milliseconds, then advances to `nextStepHash` (when one is set). A step with `nextStepHash` set to `false` (the default) ends the workflow. See [Architecture](architecture.md) for the full state diagram.
 
-## Step 4 &mdash; Write A Custom Assertion
+## Step 4 - Write A Custom Assertion
 
 An assertion is a subclass of the exported `AssertCondition` base class. Override `assertCondition(pConditionDataObject)` to return a boolean.
 
@@ -157,4 +157,4 @@ The two built-in assertions show the pattern:
 ## Next Steps
 
 - Read the [Architecture](architecture.md) page for the workflow-state shape, the persistence model, and the full list of class methods.
-- Read the [Easy Cruiser Example](example-easy-cruiser.md) to see Cruise Control's host pattern &mdash; a Pict application injected into a remote page from an Electron shell.
+- Read the [Easy Cruiser Example](example-easy-cruiser.md) to see Cruise Control's host pattern - a Pict application injected into a remote page from an Electron shell.

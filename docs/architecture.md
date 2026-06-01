@@ -26,11 +26,11 @@ module.exports.AssertCondition = libAssertCondition;
 module.exports.BrowserStateManagement = require('./Pict-CruiseControl-BrowserStateManagement.js');
 ```
 
-## The Workflow Engine &mdash; `FableCruiseControl`
+## The Workflow Engine - `FableCruiseControl`
 
 The engine extends `fable-serviceproviderbase` and sets `serviceType = 'CruiseControl'`. On construction it registers the `AssertCondition` and `WorkflowStep` service types (via `addServiceTypeIfNotExists`), then seeds the built-ins:
 
-- `workflowSteps.Wait` &mdash; the generic wait step
+- `workflowSteps.Wait` - the generic wait step
 - `workflowAssertions.TitleContains` and `workflowAssertions.ElementExists`
 
 It also aliases `this.pict = this.fable` for convenience.
@@ -49,15 +49,15 @@ It also aliases `this.pict = this.fable` for convenience.
 
 ### State Storage Dependency
 
-The engine does not hold its own state. It reads and writes the current workflow through `this.fable.services.CruiseControlStateManagement` &mdash; for example `resetWorkflow()`, `getStoredWorkflow()`, and `storeCurrentWorkflow()`. The state manager must therefore be registered under the service hash **`CruiseControlStateManagement`** before a workflow is started. (The [Quickstart](quickstart.md) shows this registration.)
+The engine does not hold its own state. It reads and writes the current workflow through `this.fable.services.CruiseControlStateManagement` - for example `resetWorkflow()`, `getStoredWorkflow()`, and `storeCurrentWorkflow()`. The state manager must therefore be registered under the service hash **`CruiseControlStateManagement`** before a workflow is started. (The [Quickstart](quickstart.md) shows this registration.)
 
 ## The Step Lifecycle
 
 `executeWorkflowStep` is re-entrant: it advances the step's `State` through a series of phases, re-invoking itself as it goes. For a single step the engine drives this sequence:
 
-1. **`Inactive` &rarr; pre-execution.** Sets state `PreExecution`, calls the step's `onBeforeExecuteStep(fNext)`.
+1. **`Inactive` -> pre-execution.** Sets state `PreExecution`, calls the step's `onBeforeExecuteStep(fNext)`.
 2. **Execution.** Sets state `Executing`, calls the step's `onExecuteStep(...)`.
-3. **`Executing` &rarr; post-execution.** Sets state `PostExecution`, calls the step's `onAfterExecuteStep(fNext)`.
+3. **`Executing` -> post-execution.** Sets state `PostExecution`, calls the step's `onAfterExecuteStep(fNext)`.
 4. **Optional wait.** If `nextStepDelay > 0`, sets state `Waiting`, waits that many milliseconds (then `CheckingPostAssertions`).
 5. **Advance.** Sets state `Completed`. If the step has a `nextStepHash`, resets to `Inactive` and executes the next step; otherwise the workflow is complete.
 
@@ -65,7 +65,7 @@ State transitions are written to storage at each phase (through `setStepState`),
 
 > **Note:** the engine source contains a commented-out block intended to evaluate a step's `nextStepAssertions` after execution and retry on failure. That post-step assertion/retry loop is **not active** in the current code. The `WorkflowStep` base class does, however, define the configuration fields it would use (see below).
 
-## Workflow Steps &mdash; `WorkflowStep`
+## Workflow Steps - `WorkflowStep`
 
 The base class (service type `WorkflowStep`) defines a step's identity, its lifecycle hooks, and a set of configuration fields. Subclass it and override the hooks.
 
@@ -101,7 +101,7 @@ The base class (service type `WorkflowStep`) defines a step's identity, its life
 
 `Generic-Step-Wait.js` overrides `onExecuteStep` to wait `AppData.CurrentWorkflowStep.WaitDuration` milliseconds via `setTimeout`, then call the callback. If no `WaitDuration` is set it logs an error and defaults to `100` ms. It sets `stepName = 'Generic Wait'`.
 
-## Assertions &mdash; `AssertCondition`
+## Assertions - `AssertCondition`
 
 The base class (service type `AssertCondition`) defines `conditionName`, `conditionHash`, and one method:
 
@@ -131,7 +131,7 @@ this.NavigationPilot   = this.pict.addView(`NavigationPilot-${this.UUID}`,  libN
 
 Its `default_configuration` is a standard Pict view configuration (`ViewIdentifier: 'PictCruiseControl'`, auto-initialize/render/solve, an empty placeholder template). The view is the intended composition root for the detection and navigation seams below.
 
-### `LocationDetection` &mdash; stub
+### `LocationDetection` - stub
 
 `PictCruiseControlLocationDetection` extends `pict-view`. Its three methods are extension points and currently return `false`:
 
@@ -141,7 +141,7 @@ Its `default_configuration` is a standard Pict view configuration (`ViewIdentifi
 | `isAtLocation(pLocationHash)` | Detect whether a specific location is loaded into the DOM. | Returns `false`. |
 | `inferLocation()` | Infer the current location(s) loaded into the DOM. | Returns `false`. |
 
-### `NavigationPilot` &mdash; stub
+### `NavigationPilot` - stub
 
 `PictCruiseControlNavigationPilot` extends `pict-view`. Its methods are extension points and are not yet implemented:
 
@@ -152,7 +152,7 @@ Its `default_configuration` is a standard Pict view configuration (`ViewIdentifi
 
 A consuming application supplies the real behavior by subclassing or overriding these views with site-specific logic.
 
-## State Management &mdash; `FableCruiseControlBrowserStateManagement`
+## State Management - `FableCruiseControlBrowserStateManagement`
 
 This service (exported as `BrowserStateManagement`) owns the workflow object and its persistence. It is configured with a `DefaultWorkflowState` and reads/writes the browser `localStorage` key **`PictCruiseControlWorkflow`**.
 
@@ -186,7 +186,7 @@ This `localStorage` round-trip is the mechanism that lets a workflow survive a f
 
 ## Configuration Schema (Reference)
 
-The module's test fixture, `test/Pict-CruiseControl-Configuration.json`, is a worked example of the kind of site description Cruise Control is designed around &mdash; a "Bookstore" site with page-detection criteria, named locations, navigation routes, actions, and a data schema.
+The module's test fixture, `test/Pict-CruiseControl-Configuration.json`, is a worked example of the kind of site description Cruise Control is designed around - a "Bookstore" site with page-detection criteria, named locations, navigation routes, actions, and a data schema.
 
 > **Scope note:** this JSON is a test fixture / design reference. The current engine code drives `WorkflowStep` chains and `AssertCondition` checks; it does not contain a loader that consumes this whole document. Treat the schema below as the intended shape of a site configuration, not as a format the shipped engine parses end-to-end. The navigation/detection seams that would act on it (`NavigationPilot`, `LocationDetection`) are the stubs documented above.
 
@@ -197,7 +197,7 @@ The fixture's top-level keys:
 | `Name`, `Description`, `Site`, `URL` | Identity of the site under automation. |
 | `Criteria` | Site-level page-detection criteria (e.g. require the `title` to contain `"Retold Bookstore"`). |
 | `Locations` | Named locations within the site, each with its own `Criteria` and a `GUIDLocation`. |
-| `NavigationRoutes` | How to reach locations &mdash; by `URL`, `HashURL`, or `Click` (with an `Address`). |
+| `NavigationRoutes` | How to reach locations - by `URL`, `HashURL`, or `Click` (with an `Address`). |
 | `Actions` | Named actions, e.g. a `RecordMarshall` against a `Schema`. |
 | `Schemas` | Data schemas to marshal from the page, with descriptors that map fields to a `PageAddress`. |
 

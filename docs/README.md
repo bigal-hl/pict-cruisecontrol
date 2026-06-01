@@ -2,7 +2,7 @@
 
 > Automated and user-assisted web-page navigation and data marshaling.
 
-Pict-Cruisecontrol drives a web page through an ordered sequence of steps and verifies conditions about the page as it goes. It is built entirely from [Pict](https://fable-retold.github.io/pict/) views and [Fable](https://fable-retold.github.io/fable/) services, so it runs anywhere Pict runs &mdash; in a normal browser app, or injected into a third-party page inside an Electron shell.
+Pict-Cruisecontrol drives a web page through an ordered sequence of steps and verifies conditions about the page as it goes. It is built entirely from [Pict](https://fable-retold.github.io/pict/) views and [Fable](https://fable-retold.github.io/fable/) services, so it runs anywhere Pict runs - in a normal browser app, or injected into a third-party page inside an Electron shell.
 
 The name is the metaphor: you set a workflow in motion and it cruises through the steps on its own, while still leaving room for a user (or a host application) to supply the parts that are specific to a given site.
 
@@ -31,11 +31,11 @@ The [Architecture](architecture.md) page documents every class and marks each st
 
 ## Documentation
 
-- **[Quickstart](quickstart.md)** &mdash; register the services, run the built-in `Wait` step, and write your own step and assertion.
-- **[Architecture](architecture.md)** &mdash; every class, the step lifecycle, the workflow-state shape, and the persistence model.
-- **[Easy Cruiser Example](example-easy-cruiser.md)** &mdash; a walkthrough of the Electron example that hot-injects a Pict application into a remote page.
+- **[Quickstart](quickstart.md)** - register the services, run the built-in `Wait` step, and write your own step and assertion.
+- **[Architecture](architecture.md)** - every class, the step lifecycle, the workflow-state shape, and the persistence model.
+- **[Easy Cruiser Example](example-easy-cruiser.md)** - a walkthrough of the Electron example that hot-injects a Pict application into a remote page.
 
 ## Related Modules
 
-- [Pict](https://fable-retold.github.io/pict/) &mdash; the MVC application framework Cruise Control is built on.
-- [Pict-Application](https://fable-retold.github.io/pict-application/) &mdash; the application base class that hosts views and services.
+- [Pict](https://fable-retold.github.io/pict/) - the MVC application framework Cruise Control is built on.
+- [Pict-Application](https://fable-retold.github.io/pict-application/) - the application base class that hosts views and services.
