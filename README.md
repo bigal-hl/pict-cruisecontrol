@@ -2,7 +2,7 @@
 
 > **[Read the Pict-Cruisecontrol Documentation](https://fable-retold.github.io/pict-cruisecontrol/)** - interactive docs with the full API reference.
 
-Automated and user-assisted web-page navigation and data marshaling for browser automation, built on the [Pict](https://fable-retold.github.io/pict/) MVC framework.
+Automated and user-assisted web-page navigation and data marshaling for browser automation, built on the [Pict](https://github.com/fable-retold/pict) MVC framework.
 
 Pict-Cruisecontrol drives a web page the way a script (or a guided user) would: it advances through an ordered list of **workflow steps**, checks **assertions** about the current page along the way, and persists its progress so a workflow can survive a full page navigation. Because it is composed of ordinary Pict views and Fable services, it runs anywhere Pict runs - including injected into a third-party page inside an Electron shell (see the `easy_cruiser` example).
 
